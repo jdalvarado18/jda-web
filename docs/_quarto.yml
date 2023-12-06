@@ -1,0 +1,28 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Juan Diego Alvarado"
+  navbar:
+    left:
+      - href: index.md
+        text: Home
+      - href: CV.md
+        text: CV
+      - href: text.qmd
+        text: Text Analysis
+      - href: network.qmd
+        text: Network Analysis
+      - href: Research.md
+        text: Research
+      - href: https://github.com/jdalvarado18/ASDS
+        text: GVPT729B
+
+format:
+  html:
+    theme: solar
+    css: styles.css
+    toc: true
+
+editor: visual

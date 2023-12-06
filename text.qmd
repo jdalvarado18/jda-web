@@ -1,0 +1,109 @@
+---
+title: "Dictionary & Text Analysis"
+---
+
+```{r}
+# Step 1: Load data from a file
+load("~/UMD/R/BukeleSince062020.RData")
+
+# Step 2: Load required libraries
+library(tidyverse)
+library(rtweet)
+library(stringr)
+library(epiDisplay)
+library(tidytext)
+library(igraph)
+library(reshape2)
+library(haven)
+library(foreign)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+library(tm)
+library(quanteda)
+
+# Step 3: Create a sample DataFrame
+bukele <- boca.df[sample(nrow(boca.df), 10000),]
+
+# Step 4: Display column names of the DataFrame
+colnames(bukele)
+
+# Step 5: Create a quanteda corpus
+bukele_corp <- corpus(bukele)
+
+# Step 6: Display a subset of the corpus
+bukele_corp[1:4]
+
+# Step 7: Display summary information of the corpus
+summary(bukele_corp) %>% head()
+
+# Step 8: Tokenize the corpus into words
+tokens(bukele_corp, "word")
+bukele_toks <- tokens(bukele_corp)
+
+# Step 9: Create a document-feature matrix (dfm) from tokens
+bukele_dfm  <- dfm(bukele_toks)
+bukele_dfm
+
+# Step 10: Display top features in the dfm
+topfeatures(bukele_dfm, 100)
+
+# Step 11: Pre-processing - Analyze the structure of dfm and tokens
+
+# - Display the number of tokens
+ntoken(bukele_toks) %>% head()
+
+# - Display the number of features in a dfm
+nfeat(bukele_dfm)
+
+# - Display the most frequent features
+topfeatures(bukele_dfm)
+
+# - Display the number of documents
+ndoc(bukele_dfm)
+
+# - Display names of features as a vector
+featnames(bukele_dfm) %>% head()
+
+# - Display frequency of features as a vector
+featfreq(bukele_dfm) %>% head()
+
+# Step 12: Restrict feature definitions
+
+# - Display the current number of features in dfm
+nfeat(bukele_dfm)
+
+# - Restrict feature definition by removing punctuation, numbers, and symbols
+bukele_toks <- tokens(bukele_corp, remove_punct = T, remove_numbers = T, remove_symbols = T)
+
+# - Display English and Spanish stopwords
+stopwords("en")
+stopwords("es")
+
+# - Remove stopwords
+stop_words_en <- stopwords("en")
+stop_words_es <- stopwords("es")
+bukele_toks <- tokens_remove(bukele_toks, pattern = stop_words_en)
+bukele_toks <- tokens_remove(bukele_toks, pattern = stop_words_es)
+
+# - Create a new dfm after removing stopwords
+bukele_dfm <- dfm(bukele_toks)
+
+# - Display the new number of features
+nfeat(bukele_dfm)
+
+# Step 13: Define terms for the bitcoin and maras variables
+
+# - Define terms for bitcoin and maras
+bitcoin_terms <- c("bitcoin", "btc", "#bitcoin", "@bitcoinmagazine", "crypto", "cripto", 
+                   "chivo wallet", "chivo", "blockchain", "buy the dip", "dip")
+
+maras_terms <- c("mara", "pandilla", "pandillas", "maras", "criminales", "criminal", 
+                 "MS-13", "CECOT", "terrorismo", "seguridad", "regimen", "excepcion", 
+                 "gang", "salvatrucha", "mano dura", "pct", "plan de control territorial")
+
+# - Create new variables using grepl
+bukele$bitcoin <- as.numeric(grepl(paste(bitcoin_terms, collapse = "|"), bukele$text, ignore.case = TRUE))
+bukele$maras <- as.numeric(grepl(paste(maras_terms, collapse = "|"), bukele$text, ignore.case = TRUE))
+
+```

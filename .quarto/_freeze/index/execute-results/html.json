@@ -1,0 +1,14 @@
+{
+  "hash": "e07150480a36d85646ac3992e44e43c0",
+  "result": {
+    "markdown": "---\ntitle: \"Juan Diego Alvarado\"\n---\n\n\n![](images/JDA%20VHS_9939.jpg){width=\"320\"}\n\nI am a doctoral student at the Department of Government and Politics at the University of Maryland, College Park. My research interests focus on the relationship between political identities and parties, movements and other organizations in Latin America.\n\nI am a member of the Latin American and Caribbean Studies Center (LACSC) as well as of the Interdisciplinary Laboratory of Computational Social Science (iLCSS).\n\nBefore joining the graduate program at GVPT, I worked as a researcher at the Instituto de Estudios Democráticos at Panama's Electoral Tribunal. Previously, I completed a MSc. in Democracy and Comparative Politics at University College London and a Law degree from Universidad Santa María la Antigua in Panama. \n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
